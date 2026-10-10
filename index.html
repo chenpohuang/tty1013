@@ -217,13 +217,17 @@ description: 產出我的業務月報 PPT，固定 6 頁。當我貼入本月筆
 </footer>
 </div>
 <script>
-function copyText(t){
-  if(navigator.clipboard&&window.isSecureContext){return navigator.clipboard.writeText(t)}
+function legacyCopy(t){
   return new Promise(function(res,rej){
     var a=document.createElement('textarea');a.value=t;a.setAttribute('readonly','');
     a.style.position='fixed';a.style.top='-1000px';document.body.appendChild(a);a.select();
     try{document.execCommand('copy')?res():rej()}catch(e){rej(e)}finally{document.body.removeChild(a)}
   })
+}
+function copyText(t){
+  /* 剪貼簿 API 被擋（LINE 等 App 內建瀏覽器常見）時，改用舊方法 */
+  if(navigator.clipboard&&window.isSecureContext){return navigator.clipboard.writeText(t).catch(function(){return legacyCopy(t)})}
+  return legacyCopy(t)
 }
 document.addEventListener('click',function(ev){
   var b=ev.target.closest('.copy');if(!b)return;
