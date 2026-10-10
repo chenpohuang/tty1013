@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>AI 檢索與應用講義</title>
+<style>
+:root{--ink:#16202b;--mute:#5a6876;--accent:#174a7c;--soft:#e6eef7;--line:#d3dbe3;--ok:#e3f1e8;--okink:#1f5b35;--no:#faece7;--noink:#7a2f2f;--bg:#ffffff;--pre:#f4f6f8}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei","Heiti TC",system-ui,sans-serif;line-height:1.6;font-size:16px}
+.wrap{max-width:760px;margin:0 auto;padding:16px 16px 48px}
+header h1{font-size:22px;line-height:1.35;margin:4px 0 6px}
+header .kicker{color:var(--mute);font-size:14px;margin:0}
+header .who{font-size:14px;margin:6px 0 0}
+.disc{font-size:12.5px;color:var(--mute);margin:6px 0 0}
+.howto{background:var(--soft);border-radius:8px;padding:10px 12px;margin:14px 0;font-size:14.5px}
+.howto p{margin:4px 0}
+.go{display:block;background:var(--accent);color:#fff;text-decoration:none;border-radius:8px;padding:12px 14px;margin:12px 0;font-weight:700;text-align:center}
+nav#toc{border:1px solid var(--line);border-radius:8px;padding:8px 12px 8px 4px;margin:12px 0 4px}
+nav#toc b{display:block;margin:0 0 2px 12px;font-size:14px;color:var(--mute)}
+nav#toc ol{margin:0;padding-left:32px}
+nav#toc li{margin:3px 0}
+a{color:var(--accent)}
+section{margin:30px 0 0}
+h2{font-size:19px;line-height:1.35;margin:0 0 8px;padding:8px 0 6px;border-bottom:3px solid var(--accent);display:flex;align-items:baseline;gap:8px}
+h2 .num{display:inline-block;min-width:26px;height:26px;line-height:26px;text-align:center;border-radius:13px;background:var(--accent);color:#fff;font-size:14px;flex:none}
+h2 .top{margin-left:auto;font-size:12.5px;font-weight:400;text-decoration:none;white-space:nowrap}
+h3{font-size:16.5px;margin:20px 0 6px;color:var(--accent)}
+h4{font-size:15px;margin:14px 0 4px}
+p{margin:8px 0}
+.lead{color:var(--mute)}
+ul,ol{margin:6px 0;padding-left:24px}
+li{margin:4px 0}
+ul.tight{margin:2px 0}
+.small{font-size:13.5px;color:var(--mute)}
+.center{text-align:center}
+.key{font-weight:700;color:var(--accent);margin:12px 0}
+.cite{font-size:14px;background:var(--pre);border-radius:6px;padding:8px 10px}
+code{font-family:Consolas,"Courier New",monospace;font-size:.92em;background:var(--pre);padding:1px 4px;border-radius:3px;word-break:break-all;display:inline-block;max-width:100%;line-height:1.35}
+.tbl{width:100%;border-collapse:collapse;margin:10px 0;font-size:14.5px}
+.tbl th,.tbl td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+.tbl th{background:var(--soft);color:var(--accent)}
+.tbl.four td:first-child{white-space:nowrap;width:1%}
+.tbl.steps td:first-child{width:5.2em}
+.tbl.small{font-size:13px}
+.plabel{font-size:13.5px;font-weight:700;color:var(--mute);margin:14px 0 4px}
+.pbox{position:relative;background:var(--pre);border:1px solid var(--line);border-radius:8px;margin:4px 0 6px}
+.pbox pre{margin:0;padding:12px 12px 12px;white-space:pre-wrap;word-break:break-word;font-family:inherit;font-size:15px;line-height:1.65}
+.pbox .copy{float:right;margin:6px 6px 4px 10px;position:relative;z-index:1;border:1px solid var(--accent);background:#fff;color:var(--accent);border-radius:6px;padding:5px 12px;font-size:14px;font-family:inherit;cursor:pointer}
+.pbox .copy.done{background:var(--accent);color:#fff}
+.pnote{font-size:13.5px;color:var(--mute);margin:0 0 10px}
+.step{border-left:4px solid var(--soft);padding:0 0 0 12px;margin:18px 0}
+.step h3{margin-top:4px}
+.two{display:flex;gap:10px;margin:12px 0}
+.two>div{flex:1;min-width:0}
+.card{border-radius:8px;padding:8px 12px}
+.card h4{margin:4px 0}
+.card ul{padding-left:20px}
+.card.ok{background:var(--ok)}.card.ok h4{color:var(--okink)}
+.card.no{background:var(--no)}.card.no h4{color:var(--noink)}
+.filebox{padding:2px 10px 8px}
+.pbox.file{background:#fff}
+.filebox ul{font-size:.85em}
+.tbl.small td:nth-child(n+2),.tbl.small th:nth-child(n+2){white-space:nowrap}
+.nw{white-space:nowrap}
+.filebox h4{font-size:14px;color:var(--accent)}
+.chat{margin:10px 0}
+.bubble{background:var(--soft);border-radius:12px 12px 12px 3px;padding:8px 12px;margin:6px 30px 6px 0;font-size:15px}
+.bubble.boss{background:var(--no);margin:10px 0 6px 30px;border-radius:12px 12px 3px 12px;font-weight:700}
+.closing{font-size:20px;font-weight:700;text-align:center;margin:22px 0 4px}
+footer{margin-top:36px;border-top:1px solid var(--line);padding-top:8px;font-size:12.5px;color:var(--mute)}
+@media (max-width:520px){
+  .two{flex-direction:column}
+  .tbl{font-size:13.5px}
+  .tbl th,.tbl td{padding:5px 6px}
+}
+@media print{
+  .pbox .copy,.top,.go{display:none}
+  body{font-size:10.5pt}
+  .wrap{max-width:none;padding:0}
+  section{margin-top:14pt}
+  h2{font-size:14pt;break-after:avoid}
+  h3,h4,.plabel{break-after:avoid}
+  .pbox,.card,.bubble,tr,.cite{break-inside:avoid}
+  .pbox.long,.pbox.file{break-inside:auto}
+  .pbox pre{font-size:10pt;padding:7pt 8pt}
+  a{color:inherit;text-decoration:none}
+  nav#toc{break-inside:avoid}
+  body.phone{font-size:8.6pt;line-height:1.5}
+  body.phone .wrap{padding:0 5px 0 1px}  /* Chromium 把 90 mm 頁寬進位，版面比可印區寬約 2 px，右邊框會被切 */
+  body.phone header h1{font-size:12.5pt}
+  body.phone h2{font-size:11pt}
+  body.phone h3{font-size:9.6pt;margin-top:10pt}
+  body.phone h4{font-size:9pt}
+  body.phone .pbox pre{font-size:8.4pt;padding:5pt 6pt}
+  body.phone .tbl{font-size:7.8pt}
+  body.phone .tbl th,body.phone .tbl td{padding:3pt 4pt}
+  body.phone .two{flex-direction:column;gap:5pt}
+  body.phone .small,body.phone .pnote,body.phone .plabel,body.phone .disc,body.phone footer{font-size:7.4pt}
+  body.phone .closing{font-size:12pt}
+  body.phone .bubble{font-size:8.6pt;padding:4pt 7pt}
+}
+</style></head>
+<body><div class="wrap">
+<header>
+<p class="kicker">東洋藥廠季會　2026-10-13　線上講義</p>
+<h1>碎片化時間極致化：必學的高效 AI 資訊檢索與應用術</h1>
+<p class="who"><span class="nw">陳柏瑝醫師</span>　<span class="nw">三軍總醫院 血液腫瘤科</span></p>
+</header>
+<div class="howto">
+<p><b>怎麼用：</b>灰色框右上角按「複製」，貼到 AI 的對話框。［ ］裡的字換成你的。</p>
+<p>示範用 Claude Pro 網頁版，ChatGPT、Gemini 同理。</p>
+</div>
+<a class="go" href="#s3">現場練習：論文練習第 3 步「讓 AI 扮醫師考你」</a>
+<nav id="toc"><b>目錄</b><ol><li><a href="#four">一個 prompt，交代四件事</a></li><li><a href="#setup">設定：把「我的情況」存起來</a></li><li><a href="#ladder">三層階梯</a></li><li><a href="#project">知識庫 Project：把內規餵給它</a></li><li><a href="#grill">Grill me：想法還模糊，讓它問你</a></li><li><a href="#persona">拜訪前排練：虛構的 D主任</a></li><li><a href="#intel">人際網：零散情報變一張圖</a></li><li><a href="#practice">論文練習：FRESCO-2 五步</a></li><li><a href="#report">給上司的報表</a></li><li><a href="#lines">三條底線：為什麼要守，怎麼守</a></li><li><a href="#homework">帶回家的四件事</a></li></ol></nav>
+<section id="four"><h2><span class="num">1</span>一個 prompt，交代四件事<a class="top" href="#toc">目錄</a></h2><p class="lead">後面每一個 prompt 都是這四件事的例子。少一格，它就自己猜一格。</p><table class="tbl four"><thead><tr><th></th><th>業務例句</th></tr></thead><tbody><tr><td><b>我的情況</b></td><td>我是大腸癌線業務，沒有醫學背景，明天要見一位主任。</td></tr><tr><td><b>我要完成</b></td><td>用三句話說明這篇論文的主要結果。</td></tr><tr><td><b>條件限制</b></td><td>只根據我貼的摘要，不加其他資料；不跟其他藥比較。</td></tr><tr><td><b>回答格式</b></td><td>三句，每句不超過 30 字，附數字。</td></tr></tbody></table><div class="plabel">空白範本（複製後自己填）</div><div class="pbox"><button class="copy" type="button" data-target="p1">複製</button><pre id="p1">我的情況：
+我要完成：
+條件限制：
+回答格式：</pre></div><div class="two"><div class="card ok"><h4>可以交給它</h4><ul><li>整理重點、改寫語氣</li><li>拆解步驟、列出該問的問題</li><li>把你的筆記變成表格</li><li>扮演醫師先問你一輪</li></ul></div><div class="card no"><h4>不能全部交給它</h4><ul><li>給付條文、仿單、指引的現行版本</li><li>療效判斷、適應症內外</li><li>對醫師的任何承諾</li><li>最新的事實：要它先搜尋，附日期和來源</li></ul></div></div><p class="key">紅燈不是不能用，是它說的要回原文、回仿單再確認。</p></section><section id="setup"><h2><span class="num">2</span>設定：把「我的情況」存起來<a class="top" href="#toc">目錄</a></h2><p class="lead">示範用 Claude Pro 網頁版。選單名稱常改，以你的畫面為準。</p><h3>給 Claude 的指示</h3><ul><li>路徑：左下角帳號名稱 → 設定 → 帳戶 → 「給 Claude 的指示」</li><li>寫一次，以後每個對話都帶著，不用每次重打「我的情況」</li><li>這一欄點到別處就自動儲存</li><li>下面是業務版模板，XXX 換成你的；不要寫客戶姓名、醫院、銷售數字</li><li>ChatGPT 的個人化設定同理</li></ul><div class="plabel">給 Claude 的指示：業務版模板</div><div class="pbox long"><button class="copy" type="button" data-target="p2">複製</button><pre id="p2">基本背景與工作
+身分： 台灣人，現居 XXX。XXX 藥廠大腸癌線業務，不是醫學背景。
+負責產品： XXX、XXX（只寫產品名，不寫客戶、醫院或銷售數字）。
+興趣： XXX。
+工作重點： 看懂 PM 與 medical 給的資料與論文、整理給付條文與仿單、準備拜訪與內部報告。
+技術偏好： 不會寫程式。需要表格時直接給我表格，需要檔案時給我可下載的檔案。
+
+回應風格與原則
+先講結論： 先一句話結論，再講理由。專有名詞保留英文，後面附一句白話。
+中性客觀： 減少寒暄、奉承或無意義的言論，以中性論點為主。
+糾錯優先： 若我的理解有誤，不要附和，直接指出錯在哪裡、依據是什麼。
+模糊即問： 條件不足時先反問我，不要自己補條件。
+嚴禁杜撰： 查不到的資訊直接回答「無確切資訊」，不要為了回答而虛構事實或來源。
+標註置信度： 推測性內容必須標註「可能」或「需驗證」。
+邏輯嚴謹： 回答前先看我給的前提對不對，不預設為真。
+
+資料與數字規範
+數字要有出處： 講到數字時說明來自哪份文件的哪一段。我貼的資料以外的內容，要標明是你補充的。
+最新資訊先查： 給付條文、仿單、指引的版本會變，需要時先搜尋，並附日期與來源。
+仿單內外： 任何要對醫師講的說法，先對照仿單；仿單沒有的標「仿單外」。
+不比較競品，不替我對醫師做任何承諾。
+
+** 不使用 em dash（—）
+** 對話用繁體中文，專有名詞用英文</pre></div><h3>放資料進去之前，先看隱私權</h3><ul><li>路徑：設定 → 隱私權 → 「Help improve our AI models」</li><li>這個開關決定你的對話會不會拿去訓練模型</li><li>要放公司資料的人先看這裡，要不要關自己決定</li></ul></section><section id="ladder"><h2><span class="num">3</span>三層階梯<a class="top" href="#toc">目錄</a></h2><table class="tbl"><thead><tr><th>層</th><th>做法</th><th>怎麼開始</th></tr></thead><tbody><tr><td><b>第一層</b><br>prompt 模板</td><td>這份講義複製貼上，今天每一段都有一個</td><td>按灰框右上角「複製」</td></tr><tr><td><b>第二層</b><br>Project</td><td>把指令和文件放進一個專案，每次對話自動帶著</td><td>側欄「專案」→ 右上「新增專案」（做法見第 4 節）</td></tr><tr><td><b>第三層</b><br>Skill</td><td>把一套流程打包成一個檔案上傳</td><td>側欄「自訂」→ Skills → 右上「+ 新增」</td></tr></tbody></table><p class="key">多數人到第二層就夠。</p></section><section id="project"><h2><span class="num">4</span>知識庫 Project：把內規餵給它<a class="top" href="#toc">目錄</a></h2><p>Intern 學了很多醫學知識，進醫院第一天卻連檢體怎麼送都不知道。學長姐寫的新人手冊裡的東西，教科書和 guideline 都沒有，叫內規。每個地方都有外人不知道的內規，這才是最該餵給 AI 的。</p><table class="tbl"><thead><tr><th>Intern 的 Project</th><th>業務的 Project</th></tr></thead><tbody><tr><td>教科書、guideline</td><td>guideline、仿單、給付條文</td></tr><tr><td>新人手冊、科內常規</td><td>core slides、training files、PM 的 strategy</td></tr><tr><td>「照我們醫院的做法，這個怎麼做」</td><td>「照公司的方向，這題怎麼答」</td></tr></tbody></table><h3>建一個 Project，三步</h3><ol><li>側欄「專案」→ 右上「新增專案」→ 填名稱與目標 → 建立</li><li>右欄「指示」→ 新增，貼下面的指令範本</li><li>右欄「背景資訊」→ 新增 → 從裝置上傳檔案，或新增文字內容</li></ol><div class="plabel">Project 指示範本</div><div class="pbox"><button class="copy" type="button" data-target="p3">複製</button><pre id="p3">這個 Project 放的是我負責產品與工作現場的資料：仿單、健保給付條文、公開指引、公司訓練資料、新人手冊。
+
+回答規則：
+1. 先找這些文件，講出是哪一份的哪一段；文件沒有的就說「文件裡沒有」，不要用一般知識補。
+2. 文件有版本或生效日期的，回答時附上日期。
+3. 任何要對醫師講的說法，先對照仿單；仿單沒有的標「仿單外」。
+4. 每個建議說法後面，列出醫師最可能反問的一題。
+5. 回答用繁體中文，專有名詞保留英文並附一句白話；先講結論再講理由。</pre></div><h3>建議放的檔案</h3><ul><li>公開文件：健保第九節給付條文、仿單、ESMO open access guideline、產品試驗的公開摘要、自己的術語表</li><li>公司素材（core slides、training files、PM 的 strategy）：放不放，先問公司。放進去的是你自己的帳號</li><li>放之前自己看一遍：個資、帳號密碼、內部網址先刪掉</li></ul><h3>版本日期要自己管</h3><p>給付條文會改。健保第九節 9.66（Lonsurf）今年就有 115/2/1 和 115/6/1 兩個修訂日期。知識庫放舊檔，它就很有自信地講舊規定。台上的示範題是問它 Lonsurf 的給付條件、能不能跟 fruquintinib 併用，它指出是哪一條、哪個生效日期，再把修訂前後的原文貼出來；最後還是回 PDF 找到那一句。</p><h3>術語表</h3><p>術語表是 Project 裡的一個文字檔，每週手動更新。問過的名詞整理好就加進去：</p><div class="plabel">術語表累積</div><div class="pbox"><button class="copy" type="button" data-target="p4">複製</button><pre id="p4">把今天問過的名詞整理成三欄：名詞 / 一句話白話 / 我自己的例子。我會存進我的術語表。</pre></div></section><section id="grill"><h2><span class="num">5</span>Grill me：想法還模糊，讓它問你<a class="top" href="#toc">目錄</a></h2><p><b>Grill（拷問）</b>：不是你問 AI，而是請 AI 像主管一樣一題一題問你，問到它能把你的需求釐清為止。關鍵是那一句「先不要給建議，用選擇題問我」。</p><div class="plabel">反問 prompt（空白版）</div><div class="pbox"><button class="copy" type="button" data-target="p5">複製</button><pre id="p5">我想做一件事但還沒想清楚：［一句話］。先不要給建議。用選擇題一次問我三題，問到你能把我的需求釐清為止，再整理給我確認。</pre></div><div class="pnote">［一句話］換成你的想法。網頁版通常會跳出選擇題讓你點。</div><div class="plabel">範例：填好的版本</div><div class="pbox"><button class="copy" type="button" data-target="p6">複製</button><pre id="p6">我想做一件事但還沒想清楚：下個月想在一家醫院辦一場給住院醫師的小型說明會，大概跟我們產品有關，但不知道該講什麼、找誰來。先不要給建議。用選擇題一次問我三題，問到你能把我的需求釐清為止，再整理給我確認。</pre></div><h3>效果</h3><ul><li>你不用先想清楚：用點的回答就好，選擇題比空白題好答</li><li>它問的，正是你漏掉的：身分、對象、目的，就是四件事裡你沒交代的「我的情況」和「條件限制」</li><li>請它問到把需求釐清、整理給你確認後再做，做出來的東西才不會偏</li><li>什麼時候用：要辦活動、寫企劃、準備報告，但腦中只有一句話的時候</li></ul><h3>今天只有一個動作：別只問 AI，讓 AI 問你</h3><table class="tbl"><thead><tr><th>什麼時候</th><th>誰問你</th></tr></thead><tbody><tr><td>想法不清</td><td>Grill me：它用選擇題問你（本節）</td></tr><tr><td>拜訪之前</td><td>主任刁難你：它照你整理的情報演（第 6 節）</td></tr><tr><td>讀論文</td><td>醫師問你：它扮醫師考你（第 8 節步 3）</td></tr></tbody></table></section><section id="persona"><h2><span class="num">6</span>拜訪前排練：虛構的 D主任<a class="top" href="#toc">目錄</a></h2><p>D主任是虛構人物。順序是：先把前輩給的情報整理成檔案，放進 Project，再讓 AI 照檔案扮主任，你先被刁難一次。</p><ol><li>先把情報整理成一份檔案：每條寫誰說的、哪天說的（範本在下面）</li><li>照第 4 節三步建一個 Project，「背景資訊」放這份檔案（新增文字內容，貼上即可）</li><li>「指示」貼下面的排練指令</li><li>對它說「我要開始排練」；講完說「結束」，它告訴你三件事</li></ol><div class="fileblock"><div class="plabel">主任檔案範本（貼進「背景資訊」）</div><div class="pbox file"><button class="copy" type="button" data-target="p7">複製</button><div class="filebox"><p class="small">每一條都標來源與日期。檔案沒寫的事，不要自己補。</p>
+<h4>時間與場合</h4>
+<table class="tbl small"><thead><tr><th>條目</th><th>來源</th><th>日期</th></tr></thead><tbody><tr><td>門診看超過 50 號就會不爽。不要在那時候去診間等他下診。</td><td>前輩 A 口述</td><td>2026-09</td></tr><tr><td>週二、三早上比較有空。</td><td>祕書</td><td>2026-09</td></tr><tr><td>要約時間就提早到辦公室跟祕書約。有約好的，他會比較親切。</td><td>自己觀察</td><td>2026-09-24</td></tr><tr><td>路上開發：癌委會結束後找他，他比較放鬆、願意說話。</td><td>前輩 B 口述</td><td>2026-08</td></tr><tr><td>午餐時間不收拜訪，但會收資料放桌上，下午門診前翻。（Claude 補）</td><td>祕書</td><td>2026-10</td></tr><tr><td>週五下午通常不在院內。（Claude 補）</td><td>自己觀察</td><td>2026-10-02</td></tr></tbody></table>
+<h4>怎麼報告他才聽</h4>
+<table class="tbl small"><thead><tr><th>條目</th><th>來源</th><th>日期</th></tr></thead><tbody><tr><td>報告資料不要超過三頁。</td><td>前輩 A 口述</td><td>2026-09</td></tr><tr><td>第一句先問「這個病人健保過不過」。給付條件沒先查清楚就別進去。（Claude 補）</td><td>自己觀察</td><td>2026-09-24</td></tr><tr><td>要看 KM 曲線和表格，不聽形容詞。說「顯著」沒附 HR 跟 CI 會被反問。（Claude 補）</td><td>前輩 B 口述</td><td>2026-08</td></tr><tr><td>他記得你上次說過的數字。前後不一致不會當場講，但下次就不太理你。（Claude 補）</td><td>前輩 A 口述</td><td>2026-09</td></tr></tbody></table>
+<h4>地雷</h4>
+<table class="tbl small"><thead><tr><th>條目</th><th>來源</th><th>日期</th></tr></thead><tbody><tr><td>聽到「其他醫院主任都已經在用」會反感。要講就講自己科的病人情境。（Claude 補）</td><td>前輩 B 口述</td><td>2026-08</td></tr><tr><td>不喜歡聽競品壞話，他自己也在開競品。問「這類病人你現在怎麼處理」比推產品有用。（Claude 補）</td><td>自己觀察</td><td>2026-09-24</td></tr><tr><td>不要追問處方量。問量等於下逐客令。（Claude 補）</td><td>前輩 A 口述</td><td>2026-09</td></tr></tbody></table>
+<h4>生活</h4>
+<table class="tbl small"><thead><tr><th>條目</th><th>來源</th><th>日期</th></tr></thead><tbody><tr><td>吃素。</td><td>祕書</td><td>2026-09</td></tr><tr><td>家庭、興趣、研究方向：檔案裡沒有。</td><td></td><td></td></tr></tbody></table>
+<h4>拜訪紀錄（每次補一條）</h4>
+<ul class="tight"><li>2026-09-24：週三 09:10 經祕書約到 10 分鐘。帶三頁。他問的第一句是給付條件。（示範）</li></ul></div><pre id="p7" hidden># D主任檔案（虛構人物，示範用）
+
+每一條都標來源與日期。檔案沒寫的事，不要自己補。
+
+### 時間與場合
+| 條目 | 來源 | 日期 |
+|---|---|---|
+| 門診看超過 50 號就會不爽。不要在那時候去診間等他下診。 | 前輩 A 口述 | 2026-09 |
+| 週二、三早上比較有空。 | 祕書 | 2026-09 |
+| 要約時間就提早到辦公室跟祕書約。有約好的，他會比較親切。 | 自己觀察 | 2026-09-24 |
+| 路上開發：癌委會結束後找他，他比較放鬆、願意說話。 | 前輩 B 口述 | 2026-08 |
+| 午餐時間不收拜訪，但會收資料放桌上，下午門診前翻。（Claude 補） | 祕書 | 2026-10 |
+| 週五下午通常不在院內。（Claude 補） | 自己觀察 | 2026-10-02 |
+
+### 怎麼報告他才聽
+| 條目 | 來源 | 日期 |
+|---|---|---|
+| 報告資料不要超過三頁。 | 前輩 A 口述 | 2026-09 |
+| 第一句先問「這個病人健保過不過」。給付條件沒先查清楚就別進去。（Claude 補） | 自己觀察 | 2026-09-24 |
+| 要看 KM 曲線和表格，不聽形容詞。說「顯著」沒附 HR 跟 CI 會被反問。（Claude 補） | 前輩 B 口述 | 2026-08 |
+| 他記得你上次說過的數字。前後不一致不會當場講，但下次就不太理你。（Claude 補） | 前輩 A 口述 | 2026-09 |
+
+### 地雷
+| 條目 | 來源 | 日期 |
+|---|---|---|
+| 聽到「其他醫院主任都已經在用」會反感。要講就講自己科的病人情境。（Claude 補） | 前輩 B 口述 | 2026-08 |
+| 不喜歡聽競品壞話，他自己也在開競品。問「這類病人你現在怎麼處理」比推產品有用。（Claude 補） | 自己觀察 | 2026-09-24 |
+| 不要追問處方量。問量等於下逐客令。（Claude 補） | 前輩 A 口述 | 2026-09 |
+
+### 生活
+| 條目 | 來源 | 日期 |
+|---|---|---|
+| 吃素。 | 祕書 | 2026-09 |
+| 家庭、興趣、研究方向：檔案裡沒有。 | | |
+
+### 拜訪紀錄（每次補一條）
+- 2026-09-24：週三 09:10 經祕書約到 10 分鐘。帶三頁。他問的第一句是給付條件。（示範）</pre></div><div class="pnote">按「複製」拿到的是文字檔原文（markdown），直接貼上即可。標「Claude 補」的條目是示範用的，換成你自己聽到的。</div></div><div class="plabel">排練指令（貼進「指示」）</div><div class="pbox long"><button class="copy" type="button" data-target="p8">複製</button><pre id="p8">你扮演 D主任（虛構人物），血液腫瘤科主任。下面「主任檔案」裡的每一條都標了來源與日期，
+只根據這些資料模擬他的反應。檔案沒寫的事（家庭、興趣、研究方向、對特定產品的看法），不要自己補，
+直接說「檔案裡沒有」。
+
+排練規則：
+1. 排練前先用兩個選擇題問我：這次拜訪的目的（認識、報告資料、處理問題、邀約）、預計幾分鐘。
+2. 排練時完全用他的口氣，不解釋、不跳出角色；他不耐煩時會縮短回答或看錶。
+3. 我說「結束」後再跳出角色，告訴我三件事：哪一句最可能讓他反感、哪一句他聽進去了、下次開場怎麼說。
+4. 我每次拜訪後會貼「拜訪紀錄」，請你把新資訊整理成一條，附日期，建議放進哪一節。</pre></div><h3>提醒</h3><ul><li>真實客戶用代號，不寫全名與醫院；檔案留在自己帳號，不轉傳。</li><li>每條情報標來源與日期，聽說的和自己看到的分開。</li><li>排練的用途是練開場和應對，不是預測他會說什麼。</li><li>資料不足就說不知道，這要寫在指令裡，否則它會編一個性格給你</li><li>星座、血型、紫微可以貼進去試，它會講得頭頭是道，但那不是資料</li></ul></section><section id="intel"><h2><span class="num">7</span>人際網：零散情報變一張圖<a class="top" href="#toc">目錄</a></h2><p><b>情境（虛構）</b>：醫學會要改選理事，你的主任要參選，你是他的幕僚。北區大約 400 票，過半才選得上；你們醫院（三O）大概 55 票。情報一條一條從不同人口中傳來。醫院名稱遮字，票數是編的。</p><div class="chat"><div class="bubble">O大那邊說願意合作，他們大概有 40 票。</div><div class="bubble">聽說 X榮已經跟長O講好了，兩邊一起投。</div><div class="bubble">馬O還沒表態，他們人多，35 票左右，誰去談？</div><div class="bubble boss">主任：幫我看一下現在局面怎樣，週五前給我一張圖。</div></div><div class="plabel">情報整理</div><div class="pbox"><button class="copy" type="button" data-target="p9">複製</button><pre id="p9">下面是我陸續聽到的情報，每條一行。先不要分析。先用選擇題問我三件事：目標是什麼、過半要幾票、哪些是確認的哪些是聽說的。再整理成表：單位、票數、傾向、來源與可信度。最後畫一張圖，告訴我先談哪兩個單位、為什麼。</pre></div><div class="pnote">在下一行貼上你的情報，每條一行。它通常會先用選擇題反問你。</div><div class="plabel">練習用的三條情報（虛構）</div><div class="pbox"><button class="copy" type="button" data-target="p10">複製</button><pre id="p10">O大那邊說願意合作，他們大概有 40 票。
+聽說 X榮已經跟長O講好了，兩邊一起投。
+馬O還沒表態，他們人多，35 票左右，誰去談？</pre></div><p class="key">醫院裡的人際情報也是這樣，一條一條口耳相傳串不起來。放進一個 Project，每次拜訪完補一條，問它『這家醫院現在誰說了算、誰跟誰不合』，它答得出來，而且會告訴你哪一條只是聽說。</p></section><section id="practice"><h2><span class="num">8</span>論文練習：FRESCO-2 五步<a class="top" href="#toc">目錄</a></h2><p class="cite">Dasari A, et al. Fruquintinib versus placebo in patients with refractory metastatic colorectal cancer (FRESCO-2): an international, multicentre, randomised, double-blind, phase 3 study. Lancet 2023;402(10395):41-53. PMID 37331369.</p><ul><li>外面的產品，你們多半沒讀過，剛好拿來練。練的是方法，不是這個藥</li><li>你手上通常只有摘要，五步全部只靠摘要就能做完</li></ul><table class="tbl steps"><thead><tr><th>步驟</th><th>做什麼</th><th>為什麼</th></tr></thead><tbody><tr><td>1 看懂大意</td><td>請 AI 用白話回答四個問題：找了誰、比什麼、看什麼、結果如何</td><td>醫師看任何一篇臨床試驗，第一眼也是看這四件事</td></tr><tr><td>2 卡住的詞</td><td>一次只問一個，例如「HR 0.66 是什麼意思」</td><td>一次問一個才聽得懂；問完存進術語表</td></tr><tr><td>3 讓 AI 考你</td><td>請它扮醫師，一題一題問你</td><td>在這裡答錯不丟臉，在醫師面前答錯才會被扣分</td></tr><tr><td>4 數字回原文</td><td>請它貼出那個數字的英文原句；要找原文，指定它去 PubMed</td><td>AI 會翻錯，原文不會</td></tr><tr><td>5 做成一頁卡</td><td>請它照規則做成一頁摘要卡，英文中文都可以</td><td>只放摘要有的內容，數字照抄</td></tr></tbody></table><div class="step" id="prep"><h3>準備：複製摘要</h3><p>打開 PubMed 這一篇：<a href="https://pubmed.ncbi.nlm.nih.gov/37331369/">https://pubmed.ncbi.nlm.nih.gov/37331369/</a>，把 Abstract 整段複製起來。下面每一步都是「先貼 prompt，下一行貼摘要」，同一個對話接著做。</p></div><div class="step" id="s1"><h3>步 1　看懂大意：用白話回答四個問題</h3><div class="pbox"><button class="copy" type="button" data-target="p11">複製</button><pre id="p11">只根據我貼的摘要，用國中生聽得懂的話回答四個問題：這個研究找了哪些病人？比較了什麼？看什麼結果？結果如何？每題兩句，摘要沒寫的不要補。</pre></div><div class="pnote">複製後在下一行貼上摘要。為什麼是這四個：醫師看任何一篇臨床試驗，第一眼也是看這四件事（前三個就是醫學上講的 PICO）。台上的實測裡，它把 median of 4 lines 翻成「4 種治療」，這種小錯留到步 4 抓。</div></div><div class="step" id="s2"><h3>步 2　卡住的詞，一次只問一個</h3><p>每次只挑一個最不懂的詞追問，例如 HR。</p><div class="plabel">名詞三段式</div><div class="pbox"><button class="copy" type="button" data-target="p12">複製</button><pre id="p12">我是藥廠業務，不是醫師。PM 剛剛說：『［貼原句］』。請 (1) 用一句白話解釋裡面的『［名詞］』；(2) 說這個詞在這句話裡為什麼重要，少了它意思會差在哪；(3) 給我一個可以回問 PM 的問題，讓我確認自己沒理解錯。不要補充這句話沒提到的數字或結論。</pre></div><div class="pnote">『［貼原句］』貼摘要裡那一句，『［名詞］』換成你圈的詞。</div><div class="plabel">問完幾個詞，整理成術語表</div><div class="pbox"><button class="copy" type="button" data-target="p13">複製</button><pre id="p13">把今天問過的名詞整理成三欄：名詞 / 一句話白話 / 我自己的例子。我會存進我的術語表。</pre></div></div><div class="step" id="s3"><h3>步 3　讓 AI 扮醫師考你（現場練習，三分鐘）</h3><div class="pbox"><button class="copy" type="button" data-target="p14">複製</button><pre id="p14">你扮演一位腫瘤科主治醫師，我是來拜訪你的藥廠業務。只根據我貼的這篇摘要，用醫師的口氣一次問我一題，共五題，從基本的問到刁鑽的。每題給我三個回答選項。我選完後，你先用醫師的反應回我一句，再跳出角色告訴我對或錯、摘要怎麼寫。五題問完，告訴我哪一個觀念我還沒懂。</pre></div><div class="pnote">複製後在下一行貼上摘要。一題一題選，答錯看它怎麼解釋。做完：五題全對的舉手。</div></div><div class="step" id="s4"><h3>步 4　數字回原文</h3><div class="pbox"><button class="copy" type="button" data-target="p15">複製</button><pre id="p15">先暫停，我要核對兩個數字。請把「［數字一］」和「［數字二］」在我貼的摘要裡的英文原句一字不改地貼給我。另外，你在前面寫「［你覺得怪的那句］」，對照原句看看這樣翻對不對。</pre></div><div class="pnote">數字回原文是習慣，不是不信任。</div><div class="plabel">台上實際用的那句（FRESCO-2）</div><div class="pbox"><button class="copy" type="button" data-target="p16">複製</button><pre id="p16">先暫停考試，我要核對兩個數字。請把「7.4 個月」和「中位數 4 線治療」在我貼的摘要裡的英文原句一字不改地貼給我。另外，你在第一次的四格表裡寫「中間值是 4 種治療」，對照原句看看這樣翻對不對。</pre></div><h4>叫它去 PubMed 查，不要讓它憑記憶回答</h4><ul><li>方法 1：接上 PubMed 連接器。側欄「自訂」→「連接器」→「探索」，搜尋 PubMed，按「+」。Anthropic 說這個連接器 Claude 使用者都能免費用</li><li>方法 2：在 prompt 裡指定（下面這句）</li></ul><div class="plabel">指定它去 PubMed 搜尋</div><div class="pbox"><button class="copy" type="button" data-target="p17">複製</button><pre id="p17">請上 PubMed 搜尋，只用 PubMed 查得到的文章回答。每一篇都附 PMID 和連結；找不到就說找不到，不要自己編。</pre></div><div class="pnote">要求它每篇都附 PMID，你才點得進去，自己對一次原文。</div><h4>完整 ref 三問，加一條</h4><ol><li>PMID 在 PubMed 查得到</li><li>是正式全文不是會議摘要</li><li>數字在原文哪一頁</li><li>內容在適應症內</li></ol><h4>這是論文，還是會議摘要？</h4><p>會議摘要的引用長得跟期刊論文一模一樣。例：<code>J Clin Oncol 2026;44(16_suppl):2641</code>（DOI 10.1200/JCO.2026.44.16_suppl.2641）是 ASCO 2026 的會議摘要，PubMed 查不到。分辨線索全在格式：issue 有 <code>_suppl</code>、頁碼是摘要編號、DOI 含 <code>16_suppl</code>、頁面標 Meeting Abstract、PubMed 查不到。</p><div class="plabel">問它（先貼那一行引用）</div><div class="pbox"><button class="copy" type="button" data-target="p18">複製</button><pre id="p18">這個引用是正式論文還是會議摘要？根據格式判斷，列出你看的線索，並告訴我怎麼自己確認。</pre></div><p class="key">對醫師講要引哪一個：有全文就引全文；只有摘要就明說是摘要。</p></div><div class="step" id="s5"><h3>步 5　做成一頁摘要卡（英文、中文都可以）</h3><div class="plabel">英文一頁卡</div><div class="pbox"><button class="copy" type="button" data-target="p19">複製</button><pre id="p19">只根據我貼的摘要，做一張英文的一頁式圖卡，直式一頁。由上到下：期刊、年份、PMID 與試驗名；一行設計標籤（phase、隨機比例、盲性、國家與醫院數、N）；Patients；Primary endpoint（兩組中位數與 HR 用大字，各附 95% CI）；Safety；Not in the abstract；最下面一行 Funding。規則：數字照摘要原樣；療效與安全性都要有；不用形容詞，不抄作者的結論句；摘要裡出現的藥名照寫，但不跟任何藥比較、不提自家產品；摘要沒寫的不要補；不加任何聲明或免責文字。</pre></div><div class="pnote">要它做成可以全螢幕看的一頁，再回一句「做成獨立的一頁式成品」。</div><div class="plabel">要中文版，在同一個對話再打這一句</div><div class="pbox"><button class="copy" type="button" data-target="p20">複製</button><pre id="p20">把這張卡翻成繁體中文。數字、藥名、試驗名和期刊名都不要動，版面不變。</pre></div><div class="pnote">翻完照樣回原文核對一次，數字一個都不能變。</div><h4>中性五條</h4><ol><li>只用摘要內容且數字原樣含 CI</li><li>療效與安全性都放</li><li>不抄作者的形容詞</li><li>標設計、經費、出處</li><li>不提自家產品、不跨試驗比較</li></ol><p>圖卡在乾淨的對話做，不在放了公司 strategy 的 Project 裡做。規則寫得不清楚時，它會先問你，那是好事。</p></div></section><section id="report"><h2><span class="num">9</span>給上司的報表<a class="top" href="#toc">目錄</a></h2><p>這一節台上沒有示範，是範本。業務月報、市調報告這類固定格式的東西：先讓 AI 問出你的格式，寫成說明書，存進 Project。</p><div class="plabel">第一輪：讓它問你（先上傳你最滿意的兩三份）</div><div class="pbox"><button class="copy" type="button" data-target="p21">複製</button><pre id="p21">這是我做過最滿意的兩三份 PPT（或聽眾反應最好的那份）。先不要做任何投影片。請用選擇題問我 8 到 10 個問題，找出我的固定結構、版面習慣、字級與配色、每頁字數、圖表用法、和絕對不放的東西。一次問 3 題，我答完再問下一輪。</pre></div><div class="plabel">收斂：寫成風格說明書</div><div class="pbox"><button class="copy" type="button" data-target="p22">複製</button><pre id="p22">把結論寫成一份 300 字以內的『風格說明書』，分成五段：給誰看、固定章節、版面規則、禁忌、完成前的檢查。我確認後才存。</pre></div><div class="plabel">試用：先出大綱</div><div class="pbox"><button class="copy" type="button" data-target="p23">複製</button><pre id="p23">用這份風格說明書，把下面的筆記做成 6 頁的 PPT 大綱，只要大綱。</pre></div><div class="plabel">大綱改好後</div><div class="pbox"><button class="copy" type="button" data-target="p24">複製</button><pre id="p24">照這個大綱出 PPTX。</pre></div><p class="small">報表版的差別只在第一句：把「PPT」換成「業務報告」，並加一句「表格留空，我之後自己填數字」。</p><h3>月報骨架（示意，無數字）</h3><p>同一份內容貼進 Project 指示就是第二層；打包成 Skill 上傳就是第三層。市調分析報告版只換固定章節。</p><div class="plabel">業務月報 SKILL.md 骨架</div><div class="pbox long"><button class="copy" type="button" data-target="p25">複製</button><pre id="p25">---
+name: monthly-sales-report
+description: 產出我的業務月報 PPT，固定 6 頁。當我貼入本月筆記、或說「做月報」時使用。
+---
+步驟 0：先用選擇題問我三件事：給誰看（直屬主管 / 部門會議）、本月最重要的一件事、有沒有要迴避的內容。問完先給 6 頁大綱，我說可以才做檔案。
+固定結構：封面 / 本月一句話 / 目標 vs 實際（表格，我自己填）/ 重點客戶進展（用代號）/ 問題與需要的支援 / 下月計畫。
+版面：白底，每頁最多 5 點，數字放表格不放長句，字級不小於 18，用公司範本的顏色。
+禁忌：不出現醫師姓名、醫院；不寫適應症外的療效描述；數字只用我給的，缺的標「待補」，不自己推估。
+完成前檢查：每一頁的內容回得到我貼的筆記；沒有任何一頁超過 5 點。</pre></div></section><section id="lines"><h2><span class="num">10</span>三條底線：為什麼要守，怎麼守<a class="top" href="#toc">目錄</a></h2><table class="tbl"><thead><tr><th>底線</th><th>為什麼（不守會怎樣）</th><th>怎麼做</th></tr></thead><tbody><tr><td><b>1. 仿單外的不講</b></td><td>AI 整理國外論文時，不會分辨哪些用法台灣仿單沒有。你照著講出口，就是仿單外宣傳。</td><td>指示裡要它標「仿單外」；講之前自己對一次仿單。</td></tr><tr><td><b>2. 沒有出處的不講</b></td><td>AI 講錯的時候，口氣一樣肯定（第 4 步那個「4 種治療」）。醫師一分鐘就查得到原文，講錯一次，後面的話他都打折。</td><td>要它附 PMID 或原文句子；自己點進去看過，再講出口。</td></tr><tr><td><b>3. 客戶資料用代號</b></td><td>放進 AI 的東西，可能被拿去訓練模型（設定那段的隱私權開關）。醫師姓名、處方量一旦外流，收不回來。</td><td>姓名和醫院用代號；處方量、銷售數字不放；公司文件放之前先問公司。</td></tr></tbody></table><p class="closing">醫師已經在用 AI 查你。<br>你要比他先查過一次。</p><p class="center small">AI 幫你省下的時間，拿去核對那一個數字。</p></section><section id="homework"><h2><span class="num">11</span>帶回家的四件事<a class="top" href="#toc">目錄</a></h2><ol><li><b>問之前，交代四件事</b>：我的情況、我要完成、條件限制、回答格式。</li><li><b>把你是誰存起來，把內規放進 Project</b>：設定一次，以後每次都帶著。</li><li><b>別只問 AI，讓 AI 問你</b>：想法不清、拜訪之前、讀論文，都先讓它問你。</li><li><b>用 AI 找證據，不拿 AI 當證據</b>：它講的每一句，都要找得到 PubMed 或原文出處。</li></ol><p><b>回家作業</b>：同一套 Practice 流程，換成自己產品的論文：看懂大意 → 卡住的詞 → 讓 AI 考你 → 數字回原文 → 一頁卡。問過的名詞加進術語表。</p></section>
+<footer>
+<p>D主任、選舉案例的人物、醫院名稱與票數皆為虛構。PubMed 連接器的說明依 Anthropic 教學頁（2026-10-10 查）。</p>
+<p>講義版本 2026-10-10。給付條文、選單名稱與工具功能會變，以當時畫面與官方公告為準。</p>
+</footer>
+</div>
+<script>
+function copyText(t){
+  if(navigator.clipboard&&window.isSecureContext){return navigator.clipboard.writeText(t)}
+  return new Promise(function(res,rej){
+    var a=document.createElement('textarea');a.value=t;a.setAttribute('readonly','');
+    a.style.position='fixed';a.style.top='-1000px';document.body.appendChild(a);a.select();
+    try{document.execCommand('copy')?res():rej()}catch(e){rej(e)}finally{document.body.removeChild(a)}
+  })
+}
+document.addEventListener('click',function(ev){
+  var b=ev.target.closest('.copy');if(!b)return;
+  var t=document.getElementById(b.dataset.target).innerText;
+  copyText(t).then(function(){b.textContent='已複製';b.classList.add('done');
+    setTimeout(function(){b.textContent='複製';b.classList.remove('done')},1600)},
+  function(){b.textContent='請長按選取';setTimeout(function(){b.textContent='複製'},2000)})
+});
+</script>
+</body></html>
